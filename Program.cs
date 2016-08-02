@@ -41,10 +41,16 @@ namespace MarkdownWikiGenerator
                 homeBuilder.AppendLine();
 
                 var sb = new StringBuilder();
+                var indexBuilder = new MarkdownBuilder();
+                indexBuilder.Header(1,"Index");
+                indexBuilder.AppendLine();
                 foreach (var item in g.OrderBy(x => x.Name))
                 {
-                    homeBuilder.ListLink(MarkdownBuilder.MarkdownCodeQuote(item.BeautifyName), g.Key + "#" + item.BeautifyName.Replace("<", "").Replace(">", "").Replace(",", "").Replace(" ", "-").ToLower());
-
+                    indexBuilder.ListLink(MarkdownBuilder.MarkdownCodeQuote(item.BeautifyName), "#" + item.BeautifyName.Replace("<", "").Replace(">", "").Replace(",", "").Replace(" ", "-").ToLower());
+                }
+                sb.AppendLine(indexBuilder.ToString());
+                foreach (var item in g.OrderBy(x => x.Name))
+                {
                     sb.Append(item.ToString());
                 }
 

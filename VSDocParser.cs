@@ -51,7 +51,7 @@ namespace MarkdownWikiGenerator
                     var summary = ((string)x.Element("summary")) ?? "";
                     if (summary != "")
                     {
-                        summary = string.Join("  ", summary.Split(new[] { "\r", "\n", "\t" }, StringSplitOptions.RemoveEmptyEntries).Select(y => y.Trim()));
+                        summary = string.Join("<br>", summary.Split(new[] { "\r", "\n", "\t" }, StringSplitOptions.RemoveEmptyEntries).Select(y => y.Trim()));
                     }
 
                     var returns = ((string)x.Element("returns")) ?? "";
