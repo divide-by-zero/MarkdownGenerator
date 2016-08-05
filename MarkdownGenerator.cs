@@ -142,7 +142,9 @@ namespace MarkdownWikiGenerator
                 var data = seq.Select(item2 =>
                 {
                     var summary = docs.FirstOrDefault(x => x.MemberName == name(item2))?.Summary ?? "";
-                    return new[] { MarkdownBuilder.MarkdownCodeQuote(type(item2)), finalName(item2), summary };
+                    var remarks = docs.FirstOrDefault(x => x.MemberName == name(item2))?.Remarks ?? "";
+                    var output = string.Join("<br>", new[] { summary, remarks}.Where(s => s != ""));
+                    return new[] { MarkdownBuilder.MarkdownCodeQuote(type(item2)), finalName(item2), output };
                 });
 
                 mb.Table(head, data);
@@ -157,7 +159,9 @@ namespace MarkdownWikiGenerator
             mb.HeaderWithCode(2, Beautifier.BeautifyType(type, false));
             mb.AppendLine();
 
-            var desc = commentLookup[type.FullName].FirstOrDefault(x => x.MemberType == MemberType.Type)?.Summary ?? "";
+            var summary = commentLookup[type.FullName].FirstOrDefault(x => x.MemberType == MemberType.Type)?.Summary ?? "";
+            var remarks = commentLookup[type.FullName].FirstOrDefault(x => x.MemberType == MemberType.Type)?.Remarks ?? "";
+            var desc = string.Join("<br>", new[] { summary, remarks}.Where(s => s != ""));
             if (desc != "")
             {
                 mb.AppendLine(desc);

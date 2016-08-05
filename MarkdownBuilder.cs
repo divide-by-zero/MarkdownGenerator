@@ -10,7 +10,6 @@ namespace MarkdownWikiGenerator
             return "`" + code + "`";
         }
 
-
         StringBuilder sb = new StringBuilder();
 
         public void Append(string text)

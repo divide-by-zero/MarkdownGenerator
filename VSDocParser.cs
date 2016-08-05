@@ -51,11 +51,16 @@ namespace MarkdownWikiGenerator
                     var summary = ((string)x.Element("summary")) ?? "";
                     if (summary != "")
                     {
-                        summary = string.Join("<br>", summary.Split(new[] { "\r", "\n", "\t" }, StringSplitOptions.RemoveEmptyEntries).Select(y => y.Trim()));
+                        summary = string.Join(" ", summary.Split(new[] { "\r", "\n", "\t" }, StringSplitOptions.RemoveEmptyEntries).Select(y => y.Trim()));
                     }
 
                     var returns = ((string)x.Element("returns")) ?? "";
                     var remarks = ((string)x.Element("remarks")) ?? "";
+                    if (remarks != "")
+                    {
+                        remarks = string.Join("<br>", remarks.Split(new[] { "\r", "\n", "\t" }, StringSplitOptions.RemoveEmptyEntries).Select(y => y.Trim()));
+                    }
+
                     var parameters = x.Elements("param")
                         .Select(e => Tuple.Create(e.Attribute("name").Value, e))
                         .Distinct(new Item1EqualityCompaerer<string, XElement>())
